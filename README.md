@@ -18,10 +18,14 @@ Route::get('blog', [ 'as' => 'blog', 'uses' => 'BlogController@store']);
 ## Artisan Command
 
 * Create a new resourceful controller
-`php artisan make:controller NameController --resource`
+
+        php artisan make:controller NameController --resource
+
 
 * Database migrations
-`php artisan make:migration create_books_table --create=books`
+
+        php artisan make:migration create_books_table --create=books
+
 
 
 ## DatabaseSeeder  &  ModelFactory
@@ -106,12 +110,42 @@ document.querySelector('video').style.marginTop="0";
 ```
 [Reference](https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser)
 
+## basic usage of git command
+* status
+        
+        git status
+
+* Working Directory -> Repository
+
+        git add/rm file_name
+![](https://cdn.liaoxuefeng.com/cdn/files/attachments/001384907702917346729e9afbf4127b6dfbae9207af016000/0)
+
+        git commit -m "description"
+
+* to remote Repository
+
+        git push
+
+[Reference](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013745374151782eb658c5a5ca454eaa451661275886c6000)
+
+## basic usage of vim
+
+        Vim file_name
+
+* Insert mode:`i`,back to command mode `ESC`
+* Save `:w`
+* Quit `:q!`
+
+[Reference](https://blog.csdn.net/yu870646595/article/details/52045150)
+
 
 ## NotoSans CJK
-NotoSans CJK 
-Source Han Sans
+NotoSans CJK => Source Han Sans
 
 ## Cyberpunk
+
+>Cyberpunk is a subgenre of science fiction in a futuristic setting that tends to focus on a "combination of lowlife and high tech" featuring advanced technological and scientific achievements, such as artificial intelligence and cybernetics, juxtaposed with a degree of breakdown 
+>or radical change in the social order.
 
 ## hosts file position
 
