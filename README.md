@@ -18,24 +18,36 @@ Route::get('blog', [ 'as' => 'blog', 'uses' => 'BlogController@store']);
 ## Artisan Command
 
 * Create a new resourceful controller
+```
+php artisan make:controller NameController --resource
+```
 
-        php artisan make:controller NameController --resource
-
+* Database migrations create
+```
+php artisan make:migration create_books_table --create=books
+```
 
 * Database migrations
+```
+php artisan migration
+```
 
-        php artisan make:migration create_books_table --create=books
+* creates a model named Category in `/app/Category.php`
+```
+php artisan make:model Category
+```
 
-
+[php artisan tinker](http://laravelacademy.org/post/4935.html)
 
 ## DatabaseSeeder  &  ModelFactory
 `database/ModelFactory.php`
 ```php
-$factory->define(App\Blog::class, function ($faker) {
+$factory->define(App\Book::class, function ($faker) {
   return [
-    'title' => $faker->sentence(mt_rand(3, 10)),
-    'content' => join("\n\n", $faker->paragraphs(mt_rand(3, 6))),
-    'published_at' => $faker->dateTimeBetween('-1 month', '+3 days'),
+            'published_at' => $faker->dateTimeBetween('-1 month', '+3 days'),
+            'title' => $faker->sentence(mt_rand(3, 10)),
+            'author' => $faker->name,
+            'description' => join("\n\n", $faker->paragraphs(mt_rand(3, 6))),
   ];
 });
 ```
@@ -47,10 +59,14 @@ class BlogTableSeeder extends Seeder
   {
     App\Blog::truncate();
 
-    factory(App\Blog::class, 5)->create();
+    factory(App\Book::class, 5)->create();
   }
 }
 ```
+[fake data reference](https://github.com/fzaninotto/Faker)
+
+[laravelcollective](https://laravelcollective.com/)
+
 
 ## Closure(javascript)
 ```javascript
