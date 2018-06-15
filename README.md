@@ -39,6 +39,13 @@ php artisan make:model Category
 
 [php artisan tinker](http://laravelacademy.org/post/4935.html)
 
+## Data
+* Add category column to books table
+```
+php artisan make:migration add_category_to_books --table="books"
+```
+[Add a new column to existing table in a migration](https://stackoverflow.com/questions/16791613/add-a-new-column-to-existing-table-in-a-migration)
+
 ## DatabaseSeeder  &  ModelFactory
 `database/ModelFactory.php`
 ```php
@@ -66,6 +73,42 @@ class BlogTableSeeder extends Seeder
 [fake data reference](https://github.com/fzaninotto/Faker)
 
 [laravelcollective](https://laravelcollective.com/)
+
+[Laravel Datatables](https://stackoverflow.com/questions/27358665/laravel-datatables)
+
+
+## Controller
+`app/Http/Controllers/BookController`
+```php
+use Illuminate\Http\Request;
+
+class BookController extends Controller
+{
+        public function store(Request $request)
+        {
+          $input = $request->all();
+          return $input;
+        }
+}
+```
+or
+```php
+use Request;
+
+class BookController extends Controller
+{
+        public function store(Request $request)
+        {
+          $input = $input = Request::all();
+          return $input;
+        }
+}
+```
+
+[Save form data in laravel](https://stackoverflow.com/questions/39436164/save-form-data-in-laravel)
+[Method orderBy does not exist in Laravel Eloquent?](https://stackoverflow.com/questions/37760963/method-orderby-does-not-exist-in-laravel-eloquent/37761020)
+
+
 
 
 ## Closure(javascript)
