@@ -106,9 +106,79 @@ class BookController extends Controller
 ```
 
 [Save form data in laravel](https://stackoverflow.com/questions/39436164/save-form-data-in-laravel)
+
+
 [Method orderBy does not exist in Laravel Eloquent?](https://stackoverflow.com/questions/37760963/method-orderby-does-not-exist-in-laravel-eloquent/37761020)
 
 
+[Search form](https://stackoverflow.com/questions/18283714/laravel-4-5-search-form-like)
+
+
+[Update](https://stackoverflow.com/questions/30749608/laravel-column-not-found-1054-unknown-column-token-in-field-list-sql-upd)
+
+## Laravel + Datatables
+```routes\web.php```
+```php
+Route::get('datatables', 'BookController@getIndex')->name('datatables');
+Route::get('datatablesdetail', 'BookController@anyData')->name('datatablesdetail');
+```
+
+
+```BookController.php```
+```php
+use View;
+use App\Book;
+use Datatables;
+class BookController extends Controller
+{
+          public function getIndex()
+              {
+                  return view('panel.datatables');
+              }
+
+          public function anyData()
+              {
+                  $datatables = Book::select(['book_id','title', 'author','category', 'description','copies'])->orderBy('created_at','desc')->get();
+                  return Datatables::of($datatables)->make(true);
+              }
+}
+```
+
+```javascript
+$(function() {
+    $('#book_table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('datatablesdetail') !!}',
+        columns: [
+            { data: 'book_id', name: 'book_id' },
+            { data: null, 
+                               name: 'title' ,
+                               render: function (data, type, row, meta){
+                                                    url = '{!! url('/') !!}';
+                                                    return '<p>' + data.title +'</p>'+ 
+                                                    '<div class="book_edit"><span><form method="GET" action="' + url + '/book/edit/' +data.book_id + '" accept-charset="UTF-8"><input class="btn" type="submit" value="编辑"></form></span><span><form method="GET" action="' + url + '/book/delete/' +data.book_id + '" accept-charset="UTF-8"><input class="btn" type="submit" value="删除"></form></span><span><form method="GET" action="' + url + '/book/show/' +data.book_id + '" accept-charset="UTF-8"><input class="btn" type="submit" value="查看"></form></span></div>';
+                                            }
+                                },
+            { data: 'author', name: 'author' },
+            { data: 'category', name: 'category' },
+            { data: null, 
+                                name: 'description',
+                                render: function (data, type, row, meta){
+                                                        return data.description.substr( 0, 38 ) + '...';
+                                                 }
+                                 },
+            { data: null, 
+                                name: 'copies' ,
+                                render: function (data, type, row, meta){
+                                                        return '<a class="btn btn-primary">' + data.copies + '</a>';
+                                                }
+                            }
+        ]
+    });
+});
+```
+[Laravel+Datatables](https://datatables.yajrabox.com/starter)
 
 
 ## Closure(javascript)
