@@ -116,6 +116,30 @@ class BookController extends Controller
 
 [Update](https://stackoverflow.com/questions/30749608/laravel-column-not-found-1054-unknown-column-token-in-field-list-sql-upd)
 
+
+## Insert new book and then get its book_id
+```php
+public function store(Request $request)
+    {
+        // $input = Request::all();
+        $input = $request->only('title', 'author','category', 'description','copies'); 
+        //Book::create($input);
+        $newbookid = DB::table('books')->insertGetId($input);
+        $isbn = create_isbn();
+        $number_of_issues = $request->copies;
+        for($i=1; $i-1<$number_of_issues; $i++){
+            Status::create(array(
+                'book_id'   => $newbookid,
+                'isbn' => $isbn,
+                'available' =>'1'
+            ));
+        }
+                
+        return redirect('datatables');
+        
+    }
+```
+
 ## Laravel + Datatables
 ```routes\web.php```
 ```php
@@ -137,10 +161,19 @@ class BookController extends Controller
               }
 
           public function anyData()
-              {
-                  $datatables = Book::select(['book_id','title', 'author','category', 'description','copies'])->orderBy('created_at','desc')->get();
-                  return Datatables::of($datatables)->make(true);
-              }
+                {
+                    $datatables = Book::select(['book_id','title', 'author','category', 'description','copies'])->get();
+                    foreach($datatables as $book){
+                                            $conditions = array(
+                                                'book_id'    => $book->book_id,
+                                                'available'  => 1
+                                            );
+                                            
+                        $count = Status::where($conditions)->count();
+                        $book->avaliability = $count;
+                     }
+                    return Datatables::of($datatables)->make(true);        
+                }
 }
 ```
 
@@ -169,6 +202,12 @@ $(function() {
                                                  }
                                  },
             { data: null, 
+                                name: 'avaliability' ,
+                                render: function (data, type, row, meta){
+                                                        return '<a class="btn btn-success">' + data.avaliability + '</a>';
+                                                }
+                             },
+            { data: null, 
                                 name: 'copies' ,
                                 render: function (data, type, row, meta){
                                                         return '<a class="btn btn-primary">' + data.copies + '</a>';
@@ -179,6 +218,20 @@ $(function() {
 });
 ```
 [Laravel+Datatables](https://datatables.yajrabox.com/starter)
+
+## Universally Unique Identifier
+```php
+function create_uuid($prefix = ""){    //可以指定前缀
+    $str = md5(uniqid(mt_rand(), true));   
+    $uuid  = substr($str,0,8) . '-';   
+    $uuid .= substr($str,8,4) . '-';   
+    $uuid .= substr($str,12,4) . '-';   
+    $uuid .= substr($str,16,4) . '-';   
+    $uuid .= substr($str,20,12);   
+    return $prefix . $uuid;
+}
+
+```
 
 
 ## Closure(javascript)
