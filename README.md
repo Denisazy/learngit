@@ -333,3 +333,35 @@ NotoSans CJK => Source Han Sans
 
 ## Modernizr
 [Reference](modernizr.com)
+
+## Apache in macbook
+
+```
+open /etc
+```
+
+- find apache2 folder
+- `httpd.conf`配置监听端口
+
+```
+#端口监听，下面配置的意思是apache启动后会监听80端口
+Listen 80
+```
+
+- `extra/httpd-vhosts.conf`配置不同端口“虚拟机”
+
+```
+<VirtualHost *:8010>
+    DocumentRoot "/Users/username/site_two"
+    ServerName www.mysite.com
+    <Directory "/Users/username/site_two">
+    Options Indexes FollowSymLinks ExecCGI
+    AllowOverride all
+    Order deny,allow
+    allow from all
+    </Directory>
+</VirtualHost>
+```
+
+>网站的文件夹需放置在用户文件夹下
+
