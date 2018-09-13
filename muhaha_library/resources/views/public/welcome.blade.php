@@ -39,7 +39,7 @@ a.btn-s:hover{
                     <h3>Welcome</h3>
                 </div>
                 <div class="module-body ">
-                                    <p class="text-center">博众图书馆</p>
+                                    <p class="text-center">xx图书馆</p>
                                     <div class="row">
                                                 <form id="search_form"  accept-charset="UTF-8" method="get" onsubmit="return false;">
                                                 <input type="hidden" style="display:none" />
